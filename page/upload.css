@@ -1,0 +1,42 @@
+body {
+  background-color: #f8f9fa;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .article-header h1 {
+    font-size: 24px;
+  }
+
+  .article-header p {
+    font-size: 14px;
+  }
+
+  .article-content p {
+    font-size: 16px;
+  }
+
+  .footer {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-header h1 {
+    font-size: 20px;
+  }
+
+  .article-content p {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Artikel</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="upload.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Upload Artikel Baru</h2>
+      <form
+        action="submit-article.php"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="title">Judul Artikel</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="category">Kategori</label>
+          <select class="form-control" id="category" name="category" required>
+            <option value="">Pilih Kategori</option>
+            <option value="teknologi">Esport</option>
+            <option value="kesehatan">Anime</option>
+            <option value="pendidikan">Japanese Culture</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="content">Isi Artikel</label>
+          <textarea
+            class="form-control"
+            id="content"
+            name="content"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="thumbnail">Upload Gambar/Thumbnail</label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="thumbnail"
+            name="thumbnail"
+            accept="image/*"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="metadata">Metadata (Tag, Deskripsi Singkat)</label>
+          <input
+            type="text"
+            class="form-control"
+            id="metadata"
+            name="metadata"
+            placeholder="Tag, Deskripsi Singkat"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <footer class="py-3 bg-white shadow-sm mt-auto">
+      <div class="container text-center">
+        <small>&copy; 2025 FalxyTV. All rights reserved.</small>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
