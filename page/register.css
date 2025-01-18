@@ -1,0 +1,64 @@
+/* Apply global font */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+small,
+label,
+button,
+a {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Body background */
+body {
+  background-color: #e3f2fd; /* Light blue background */
+}
+
+/* Custom card style */
+.custom-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff; /* White background */
+  border: none;
+}
+
+/* Button primary style */
+.btn-primary {
+  background-color: #42a5f5; /* Light blue button */
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #1e88e5; /* Darker blue on hover */
+}
+
+/* Link styles */
+a {
+  color: #42a5f5; /* Link color */
+}
+
+a:hover {
+  color: #1e88e5; /* Link hover color */
+}
+
+/* Header style */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Footer style */
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #ddd;
+}
