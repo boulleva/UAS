@@ -1,51 +1,63 @@
+/* Import Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* General Styles */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #f0f8ff;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar {
-  background-color: #007bff;
-}
-
-.navbar-brand,
-.nav-link {
-  color: #fff !important;
-}
-
-.nav-link:hover {
-  text-decoration: underline;
-}
-
-.hero {
-  background-color: #e3f2fd;
-  padding: 50px 20px;
+/* Header */
+.article-header {
+  background: #343a40;
+  color: #fff;
+  padding: 20px;
   text-align: center;
 }
 
-.hero h1 {
-  font-size: 2.5rem;
-  color: #007bff;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  color: #555;
-}
-
-.card {
-  border: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Article Content */
+.article-content img {
+  max-width: 100%;
   border-radius: 10px;
+  margin: 20px 0;
 }
 
-footer {
-  background-color: #007bff;
+/* Footer */
+.footer {
+  background: #343a40;
   color: #fff;
   text-align: center;
-  padding: 20px 0;
-  margin-top: auto;
+  padding: 10px 0;
+  margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .article-header h1 {
+    font-size: 24px;
+  }
+
+  .article-header p {
+    font-size: 14px;
+  }
+
+  .article-content p {
+    font-size: 16px;
+  }
+
+  .footer {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-header h1 {
+    font-size: 20px;
+  }
+
+  .article-content p {
+    font-size: 14px;
+  }
 }
