@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="profile.css" />
+  </head>
+  <body>
+    <header>
+      <h1>User Profile</h1>
+    </header>
+    <div class="container">
+      <h2>Welcome, <span id="usernameDisplay"></span>!</h2>
+      <button id="logoutBtn" class="btn btn-danger">Logout</button>
+    </div>
+
+    <script>
+      // Ambil username dari localStorage
+      const username = localStorage.getItem("username");
+      if (!username) {
+        window.location.href = "login.html"; // Redirect jika tidak ada username
+      } else {
+        document.getElementById("usernameDisplay").innerText = username;
+      }
+
+      // Logout function
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+          localStorage.removeItem("username"); // Hapus username dari localStorage
+          window.location.href = "login.html"; // Redirect ke halaman login
+        });
+    </script>
+  </body>
+</html>

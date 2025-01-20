@@ -43,6 +43,14 @@
       </div>
     </nav>
 
+    <script>
+      // Cek apakah user sudah login
+      const username = localStorage.getItem("username");
+      if (!username) {
+        window.location.href = "login.html"; // Redirect ke login jika belum login
+      }
+    </script>
+
     <div class="hero">
       <h1>Selamat Datang di FalxyTV</h1>
       <p>Tempat terpercaya dalam dunia E-Sport dan Anime</p>

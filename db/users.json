@@ -16,5 +16,29 @@
     "username": "user2",
     "password": "user456",
     "role": "user"
+  },
+  {
+    "id": 4,
+    "username": "admin2",
+    "password": "adminpass",
+    "role": "admin"
+  },
+  {
+    "id": 5,
+    "username": "falxxy",
+    "password": "noufal123",
+    "role": "user"
+  },
+  {
+    "id": 6,
+    "username": "users123",
+    "password": "mypassword",
+    "role": "user"
+  },
+  {
+    "id": 7,
+    "username": "newuser",
+    "password": "newpassword",
+    "role": "user"
   }
 ]

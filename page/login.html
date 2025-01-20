@@ -33,14 +33,14 @@
     >
       <div class="card shadow-lg p-4 rounded custom-card">
         <h2 class="text-center mb-4">Login</h2>
-        <form>
+        <form id="loginForm">
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
+            <label for="username" class="form-label">Username</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="email"
-              placeholder="Enter your email"
+              id="username"
+              placeholder="Enter your username"
               required
             />
           </div>
@@ -57,12 +57,10 @@
           <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
         <div class="text-center mt-3">
-          <small
-            >Tidak punya akun?
-            <a href="register.html" class="text-decoration-none"
-              >Sign Up</a
-            ></small
-          >
+          <small>
+            Tidak punya akun?
+            <a href="register.html" class="text-decoration-none">Sign Up</a>
+          </small>
         </div>
       </div>
     </div>
@@ -76,5 +74,44 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await fetch("http://localhost:3000/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              // Simpan username ke localStorage
+              localStorage.setItem("username", username);
+              alert("Login berhasil! Redirecting...");
+              window.location.href = "mainpage.html";
+            } else {
+              alert("Login gagal. Periksa username dan password Anda.");
+            }
+          } catch (error) {
+            console.error("Error during login:", error);
+            alert("Terjadi kesalahan. Coba lagi nanti.");
+          }
+        });
+
+      // Redirect jika user sudah login
+      if (localStorage.getItem("username")) {
+        window.location.href = "mainpage.html";
+      }
+    </script>
   </body>
 </html>
