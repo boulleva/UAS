@@ -1,7 +1,9 @@
 import fs from "fs/promises"; // Modul untuk file system
 import path from "path"; // Modul untuk manipulasi path
+import jwt from "jsonwebtoken"; // Modul untuk JWT
 
 const dbPath = path.join("db", "users.json"); // Lokasi file database JSON
+const JWT_SECRET = "your_secret_key"; // Ganti dengan secret key yang aman
 
 /**
  * Fungsi untuk membaca database
@@ -38,10 +40,17 @@ async function login(username, password) {
   );
 
   if (user) {
+    // Membuat JWT token
+    const token = jwt.sign(
+      { username: user.username, role: user.role },
+      JWT_SECRET,
+      { expiresIn: "1h" } // Token valid selama 1 jam
+    );
+
     return {
       success: true,
       message: `Welcome, ${user.role}: ${user.username}`,
-      role: user.role,
+      token, // Kirim token kepada user
     };
   } else {
     return {
@@ -78,6 +87,46 @@ async function addUser(username, password, role) {
     message: "User berhasil ditambahkan.",
     user: newUser,
   };
+}
+
+/**
+ * Middleware untuk memverifikasi token JWT
+ */
+function verifyToken(authHeader) {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return { valid: false, message: "Token tidak ditemukan atau tidak valid" };
+  }
+
+  const token = authHeader.split(" ")[1]; // Ambil token setelah "Bearer"
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET); // Verifikasi token
+    return { valid: true, decoded };
+  } catch (error) {
+    return {
+      valid: false,
+      message: "Token tidak valid atau sudah kedaluwarsa",
+    };
+  }
+}
+
+/**
+ * Middleware untuk Role-Based Access Control (RBAC)
+ */
+function checkRole(authHeader, allowedRoles) {
+  const { valid, decoded, message } = verifyToken(authHeader);
+
+  if (!valid) {
+    return { allowed: false, message };
+  }
+
+  if (!allowedRoles.includes(decoded.role)) {
+    return {
+      allowed: false,
+      message: "Akses ditolak. Anda tidak memiliki izin yang sesuai.",
+    };
+  }
+
+  return { allowed: true, decoded };
 }
 
 // Menjalankan server dengan Bun.js
@@ -135,6 +184,51 @@ Bun.serve({
           { status: 400, headers: { "Content-Type": "application/json" } }
         );
       }
+    }
+
+    // Protected route untuk user biasa
+    if (req.method === "GET" && url.pathname === "/user") {
+      const authHeader = req.headers.get("Authorization");
+      const { allowed, decoded, message } = checkRole(authHeader, [
+        "user",
+        "admin",
+      ]);
+
+      if (!allowed) {
+        return new Response(JSON.stringify({ success: false, message }), {
+          status: 403,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: `Halo ${decoded.role}, ${decoded.username}. Ini adalah halaman untuk user biasa.`,
+        }),
+        { headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // Protected route untuk admin
+    if (req.method === "GET" && url.pathname === "/admin") {
+      const authHeader = req.headers.get("Authorization");
+      const { allowed, decoded, message } = checkRole(authHeader, ["admin"]);
+
+      if (!allowed) {
+        return new Response(JSON.stringify({ success: false, message }), {
+          status: 403,
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: `Selamat datang, Admin ${decoded.username}!`,
+        }),
+        { headers: { "Content-Type": "application/json" } }
+      );
     }
 
     return new Response(JSON.stringify({ message: "Route not found" }), {

@@ -20,6 +20,28 @@ body {
   text-align: center;
   position: relative; /* Untuk menempatkan logo di pojok kiri */
 }
+.article-header .logo {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+.article-title {
+  margin-top: 30px; /* Memberi jarak antara logo dan judul */
+}
+
+.article-title h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.article-title p {
+  font-size: 14px;
+  color: #ccc;
+}
 
 .logo {
   position: absolute;

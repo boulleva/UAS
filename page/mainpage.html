@@ -36,7 +36,7 @@
               <a class="nav-link" href="#">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="profile.html">Profile</a>
             </li>
           </ul>
         </div>
@@ -44,10 +44,11 @@
     </nav>
 
     <script>
-      // Cek apakah user sudah login
       const username = localStorage.getItem("username");
-      if (!username) {
-        window.location.href = "login.html"; // Redirect ke login jika belum login
+      const currentPage = window.location.pathname.split("/").pop();
+
+      if (!username && currentPage !== "mainpage.html") {
+        window.location.href = "login.html";
       }
     </script>
 

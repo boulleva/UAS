@@ -34,4 +34,18 @@ export async function login(username, password) {
     success: false,
     message: "Login gagal! Username atau password salah.",
   };
+  fetch("http://localhost:4000/profile", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`, // Kirim token
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        console.log("Profil pengguna:", data.data);
+      } else {
+        console.log("Gagal mengakses profil:", data.message);
+      }
+    });
 }
