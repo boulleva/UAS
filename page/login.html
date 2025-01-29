@@ -95,10 +95,15 @@
             const result = await response.json();
 
             if (result.success) {
-              // Simpan username ke localStorage
               localStorage.setItem("username", username);
-              alert("Login berhasil! Redirecting...");
-              window.location.href = "mainpage.html";
+              localStorage.setItem("role", result.role); // Simpan role pengguna
+
+              alert("Login berhasil!");
+              if (result.role === "admin") {
+                window.location.href = "upload.html";
+              } else {
+                window.location.href = "mainpage.html";
+              }
             } else {
               alert("Login gagal. Periksa username dan password Anda.");
             }
@@ -108,17 +113,12 @@
           }
         });
 
-      // Redirect jika user sudah login
-      if (localStorage.getItem("username")) {
+      // Cegah looping login
+      if (
+        localStorage.getItem("username") &&
+        window.location.pathname.includes("login.html")
+      ) {
         window.location.href = "mainpage.html";
-        fetch("http://localhost:4000/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: "admin", password: "adminpass" }),
-        })
-          .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error("Error:", error));
       }
     </script>
   </body>

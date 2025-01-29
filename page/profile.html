@@ -11,28 +11,52 @@
     <link rel="stylesheet" href="profile.css" />
   </head>
   <body>
-    <header>
-      <h1>User Profile</h1>
+    <a href="mainpage.html" class="btn btn-secondary back-button">Kembali</a>
+    <header class="bg-primary text-white text-center py-3">
+      <h1>FalxyTV</h1>
     </header>
-    <div class="container">
-      <h2>Welcome, <span id="usernameDisplay"></span>!</h2>
-      <button id="logoutBtn" class="btn btn-danger">Logout</button>
+
+    <div class="container mt-4">
+      <h2>Selamat datang, <span id="usernameDisplay"></span>!</h2>
+      <p>
+        Anda login sebagai: <strong><span id="roleDisplay"></span></strong>
+      </p>
+      <!-- Tombol upload berita hanya untuk Admin -->
+      <div id="adminOptions" class="mt-3" style="display: none">
+        <a href="upload.html" class="btn btn-success">Upload Berita</a>
+      </div>
+
+      <button id="logoutBtn" class="btn btn-danger mt-3">Logout</button>
     </div>
 
     <script>
-      // Ambil username dari localStorage
-      const username = localStorage.getItem("username");
-      if (!username) {
-        window.location.href = "login.html"; // Redirect jika tidak ada username
+      // Ambil token JWT dari localStorage
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        // Redirect ke login jika tidak ada token
+        window.location.href = "login.html";
       } else {
+        // Decode token untuk mendapatkan username & role
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        const username = decoded.username;
+        const role = decoded.role;
+
+        // Tampilkan username dan role di halaman
         document.getElementById("usernameDisplay").innerText = username;
+        document.getElementById("roleDisplay").innerText = role;
+
+        // Jika pengguna adalah admin, tampilkan tombol "Upload Berita"
+        if (role === "admin") {
+          document.getElementById("adminOptions").style.display = "block";
+        }
       }
 
       // Logout function
       document
         .getElementById("logoutBtn")
         .addEventListener("click", function () {
-          localStorage.removeItem("username"); // Hapus username dari localStorage
+          localStorage.removeItem("token"); // Hapus token dari localStorage
           window.location.href = "login.html"; // Redirect ke halaman login
         });
     </script>

@@ -31,3 +31,27 @@ h2 {
   padding: 10px; /* Padding dalam tombol */
   font-size: 16px; /* Ukuran font tombol */
 }
+.back-button {
+  position: absolute;
+  top: 1px;
+  left: 10px;
+  width: 100px;
+  height: 87px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent !important; /* Make background transparent */
+  border: none; /* Remove default border if needed */
+  /* Optional: Add some styling for better visibility */
+  color: white; /* Example: Change text color */
+  /* Add hover effect */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+.back-button:hover {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.2
+  ); /* Example: Slightly darker transparent background on hover */
+}

@@ -11,30 +11,30 @@
     <link rel="stylesheet" href="upload.css" />
   </head>
   <body>
+    <!-- Header -->
+    <header class="py-3 px-4 bg-white shadow-sm">
+      <div class="container">
+        <a href="index.html" style="text-decoration: none">
+          <h1 class="m-0 fw-bold text-primary">FalxyTV</h1>
+        </a>
+      </div>
+    </header>
+
+    <!-- Form Upload Artikel -->
     <div class="container mt-5">
       <h2>Upload Artikel Baru</h2>
-      <form
-        action="submit-article.php"
-        method="POST"
-        enctype="multipart/form-data"
-      >
+      <form id="uploadForm">
         <div class="form-group">
           <label for="title">Judul Artikel</label>
-          <input
-            type="text"
-            class="form-control"
-            id="title"
-            name="title"
-            required
-          />
+          <input type="text" class="form-control" id="title" required />
         </div>
         <div class="form-group">
           <label for="category">Kategori</label>
-          <select class="form-control" id="category" name="category" required>
+          <select class="form-control" id="category" required>
             <option value="">Pilih Kategori</option>
-            <option value="teknologi">Esport</option>
-            <option value="kesehatan">Anime</option>
-            <option value="pendidikan">Japanese Culture</option>
+            <option value="Esport">Esport</option>
+            <option value="Anime">Anime</option>
+            <option value="Japanese Culture">Japanese Culture</option>
           </select>
         </div>
         <div class="form-group">
@@ -42,7 +42,6 @@
           <textarea
             class="form-control"
             id="content"
-            name="content"
             rows="5"
             required
           ></textarea>
@@ -53,7 +52,6 @@
             type="file"
             class="form-control-file"
             id="thumbnail"
-            name="thumbnail"
             accept="image/*"
             required
           />
@@ -64,7 +62,6 @@
             type="text"
             class="form-control"
             id="metadata"
-            name="metadata"
             placeholder="Tag, Deskripsi Singkat"
             required
           />
@@ -72,14 +69,107 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
+
+    <!-- Footer -->
     <footer class="py-3 bg-white shadow-sm mt-auto">
       <div class="container text-center">
         <small>&copy; 2025 FalxyTV. All rights reserved.</small>
       </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // Cek role, hanya admin yang bisa akses halaman ini
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        const role = decoded.role;
+
+        if (role !== "admin") {
+          alert("Anda tidak memiliki izin untuk mengakses halaman ini.");
+          window.location.href = "mainpage.html";
+        }
+      } else {
+        window.location.href = "login.html"; // Redirect jika belum login
+      }
+
+      // Fungsi untuk menangani upload artikel
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const title = document.getElementById("title").value;
+          const category = document.getElementById("category").value;
+          const content = document.getElementById("content").value;
+          const metadata = document.getElementById("metadata").value;
+          const imageInput = document.getElementById("thumbnail").files[0];
+
+          if (!title || !content || !category || !metadata) {
+            alert("Semua field harus diisi!");
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const imageUrl = event.target.result;
+
+            // Ambil artikel lama dari localStorage
+            const articles = JSON.parse(localStorage.getItem("articles")) || [];
+
+            // Tambahkan artikel baru
+            articles.push({ title, category, content, metadata, imageUrl });
+
+            // Simpan kembali ke localStorage
+            localStorage.setItem("articles", JSON.stringify(articles));
+
+            alert("Artikel berhasil diupload!");
+            window.location.href = "mainpage.html"; // Redirect ke halaman utama
+          };
+
+          reader.readAsDataURL(imageInput);
+        });
+    </script>
+    <script>
+      document
+        .getElementById("uploadForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          let title = document.getElementById("title").value;
+          let category = document.getElementById("category").value;
+          let content = document.getElementById("content").value;
+          let metadata = document.getElementById("metadata").value;
+          let image = document.getElementById("thumbnail").files[0];
+
+          if (!image) {
+            alert("Mohon pilih gambar!");
+            return;
+          }
+
+          let reader = new FileReader();
+          reader.readAsDataURL(image);
+          reader.onload = function () {
+            let imageUrl = reader.result;
+
+            let articles = JSON.parse(localStorage.getItem("articles")) || [];
+
+            let newArticle = {
+              title: title,
+              category: category,
+              content: content,
+              shortDescription: metadata,
+              image: imageUrl,
+              author: "Admin", // Bisa diganti sesuai user login
+              date: new Date().toLocaleDateString("id-ID"),
+            };
+
+            articles.push(newArticle);
+            localStorage.setItem("articles", JSON.stringify(articles));
+
+            alert("Artikel berhasil diunggah!");
+            window.location.href = "mainpage.html";
+          };
+        });
+    </script>
   </body>
 </html>

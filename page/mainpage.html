@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News Portal</title>
+    <title>News Portal - FalxyTV</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,10 +12,10 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles2.css" />
   </head>
   <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="index.html">FalxyTV</a>
@@ -43,21 +43,27 @@
       </div>
     </nav>
 
+    <!-- Cek Login -->
     <script>
       const username = localStorage.getItem("username");
-      const currentPage = window.location.pathname.split("/").pop();
+      const role = localStorage.getItem("role");
 
-      if (!username && currentPage !== "mainpage.html") {
-        window.location.href = "login.html";
+      if (!username) {
+        window.location.href = "login.html"; // Redirect hanya jika belum login
       }
     </script>
 
+    <!-- Hero Section -->
     <div class="hero">
       <h1>Selamat Datang di FalxyTV</h1>
       <p>Tempat terpercaya dalam dunia E-Sport dan Anime</p>
     </div>
+
+    <!-- Berita Terbaru -->
     <div class="container my-5">
-      <div class="row">
+      <h2 class="mb-4">Berita Terkini</h2>
+      <div class="row" id="newsContainer">
+        <!-- Berita Statis -->
         <div class="col-md-4">
           <div class="card">
             <img src="b8.png" class="card-img-top" alt="News Image" />
@@ -103,11 +109,92 @@
       </div>
     </div>
 
+    <!-- Footer -->
     <footer class="mt-auto">
-      <p>&copy; 2025 NewsPortal. All Rights Reserved.</p>
+      <p>&copy; 2025 FalxyTV. All Rights Reserved.</p>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script untuk Menampilkan Artikel -->
+    <script>
+      function loadArticles() {
+        const articles = JSON.parse(localStorage.getItem("articles")) || [];
+        const newsContainer = document.getElementById("newsContainer");
+
+        if (articles.length === 0) {
+          return;
+        }
+
+        articles.forEach((item) => {
+          const articleCard = document.createElement("div");
+          articleCard.classList.add("col-md-4");
+
+          let imageHtml = "";
+          if (item.imageUrl) {
+            imageHtml = `<img src="${item.imageUrl}" class="card-img-top" alt="Artikel Image">`;
+          }
+
+          articleCard.innerHTML = `
+            <div class="card">
+              ${imageHtml}
+              <div class="card-body">
+                <h5 class="card-title">${item.title}</h5>
+                <p class="text-muted">${item.category} - ${item.metadata}</p>
+                <p class="card-text">${item.content.substring(0, 100)}...</p>
+                <a href="#" class="btn btn-primary">Read More</a>
+              </div>
+            </div>
+          `;
+
+          newsContainer.appendChild(articleCard);
+        });
+      }
+
+      loadArticles();
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ambil daftar artikel dari localStorage atau gunakan array dummy jika kosong
+        let articles = JSON.parse(localStorage.getItem("articles")) || [];
+
+        // Ambil container untuk menampilkan artikel
+        const articleContainer = document.getElementById("article-list");
+
+        // Pastikan container ada di halaman
+        if (articleContainer) {
+          articleContainer.innerHTML = ""; // Kosongkan dulu sebelum diisi ulang
+
+          articles.forEach((article, index) => {
+            let articleHTML = `
+              <div class="col-md-4">
+                <div class="card">
+                  <img src="${article.image}" class="card-img-top" alt="News Image" />
+                  <div class="card-body">
+                    <h5 class="card-title">${article.title}</h5>
+                    <p class="card-text">${article.shortDescription}</p>
+                    <button class="btn btn-primary read-more" data-index="${index}">Read More</button>
+                  </div>
+                </div>
+              </div>
+            `;
+            articleContainer.innerHTML += articleHTML;
+          });
+
+          // Tambahkan event listener ke semua tombol "Read More"
+          document.querySelectorAll(".read-more").forEach((button) => {
+            button.addEventListener("click", function () {
+              const index = this.getAttribute("data-index");
+              localStorage.setItem(
+                "selectedArticle",
+                JSON.stringify(articles[index])
+              );
+              window.location.href = "detail.html";
+            });
+          });
+        }
+      });
+    </script>
   </body>
 </html>
