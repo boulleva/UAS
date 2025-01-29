@@ -40,5 +40,17 @@
     "username": "newuser",
     "password": "newpassword",
     "role": "user"
+  },
+  {
+    "id": 8,
+    "username": "testuser",
+    "password": "password123",
+    "role": "user"
+  },
+  {
+    "id": 9,
+    "username": "zidanx1",
+    "password": "noufal123",
+    "role": "user"
   }
 ]

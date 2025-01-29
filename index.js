@@ -61,35 +61,6 @@ async function login(username, password) {
 }
 
 /**
- * Fungsi untuk menambahkan user baru
- */
-async function addUser(username, password, role) {
-  const users = await readDatabase();
-
-  if (users.find((u) => u.username === username)) {
-    return {
-      success: false,
-      message: "Gagal menambahkan user: Username sudah ada.",
-    };
-  }
-
-  const newUser = {
-    id: users.length + 1,
-    username,
-    password,
-    role,
-  };
-
-  users.push(newUser);
-  await writeDatabase(users);
-  return {
-    success: true,
-    message: "User berhasil ditambahkan.",
-    user: newUser,
-  };
-}
-
-/**
  * Middleware untuk memverifikasi token JWT
  */
 function verifyToken(authHeader) {
@@ -129,10 +100,31 @@ function checkRole(authHeader, allowedRoles) {
   return { allowed: true, decoded };
 }
 
+/**
+ * Middleware untuk menangani CORS
+ */
+const headers = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*", // Izinkan semua origin
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
+// Middleware untuk menangani preflight request (OPTIONS)
+async function handleCors(req) {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers });
+  }
+  return null;
+}
+
 // Menjalankan server dengan Bun.js
 Bun.serve({
   port: 4000, // Pastikan port sesuai dan tidak digunakan oleh proses lain
   async fetch(req) {
+    const corsResponse = await handleCors(req);
+    if (corsResponse) return corsResponse;
+
     const url = new URL(req.url, `http://${req.headers.get("host")}`);
     console.log(`Request received: ${req.method} ${url.pathname}`);
 
@@ -144,19 +136,19 @@ Bun.serve({
         if (!username || !password || !role) {
           return new Response(
             JSON.stringify({ message: "Semua field harus diisi" }),
-            { status: 400, headers: { "Content-Type": "application/json" } }
+            { status: 400, headers }
           );
         }
 
         const response = await addUser(username, password, role);
         return new Response(JSON.stringify(response), {
-          headers: { "Content-Type": "application/json" },
+          headers,
           status: response.success ? 200 : 400,
         });
       } catch (error) {
         return new Response(
           JSON.stringify({ message: "Invalid request format" }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
+          { status: 400, headers }
         );
       }
     }
@@ -169,19 +161,19 @@ Bun.serve({
         if (!username || !password) {
           return new Response(
             JSON.stringify({ message: "Username dan password wajib diisi" }),
-            { status: 400, headers: { "Content-Type": "application/json" } }
+            { status: 400, headers }
           );
         }
 
         const response = await login(username, password);
         return new Response(JSON.stringify(response), {
-          headers: { "Content-Type": "application/json" },
+          headers,
           status: response.success ? 200 : 401,
         });
       } catch (error) {
         return new Response(
           JSON.stringify({ message: "Invalid request format" }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
+          { status: 400, headers }
         );
       }
     }
@@ -197,7 +189,7 @@ Bun.serve({
       if (!allowed) {
         return new Response(JSON.stringify({ success: false, message }), {
           status: 403,
-          headers: { "Content-Type": "application/json" },
+          headers,
         });
       }
 
@@ -206,7 +198,7 @@ Bun.serve({
           success: true,
           message: `Halo ${decoded.role}, ${decoded.username}. Ini adalah halaman untuk user biasa.`,
         }),
-        { headers: { "Content-Type": "application/json" } }
+        { headers }
       );
     }
 
@@ -218,7 +210,7 @@ Bun.serve({
       if (!allowed) {
         return new Response(JSON.stringify({ success: false, message }), {
           status: 403,
-          headers: { "Content-Type": "application/json" },
+          headers,
         });
       }
 
@@ -227,13 +219,13 @@ Bun.serve({
           success: true,
           message: `Selamat datang, Admin ${decoded.username}!`,
         }),
-        { headers: { "Content-Type": "application/json" } }
+        { headers }
       );
     }
 
     return new Response(JSON.stringify({ message: "Route not found" }), {
       status: 404,
-      headers: { "Content-Type": "application/json" },
+      headers,
     });
   },
 });
