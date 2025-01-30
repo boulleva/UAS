@@ -38,6 +38,11 @@
             <li class="nav-item">
               <a class="nav-link" href="profile.html">Profile</a>
             </li>
+            <li class="nav-item">
+              <button id="logoutBtn" class="btn btn-danger btn-sm">
+                Logout
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -45,12 +50,22 @@
 
     <!-- Cek Login -->
     <script>
-      const username = localStorage.getItem("username");
-      const role = localStorage.getItem("role");
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("username");
 
-      if (!username) {
-        window.location.href = "login.html"; // Redirect hanya jika belum login
-      }
+        if (!username) {
+          window.location.href = "login.html"; // Redirect hanya jika belum login
+        }
+
+        // Logout
+        document
+          .getElementById("logoutBtn")
+          .addEventListener("click", function () {
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+            window.location.href = "login.html";
+          });
+      });
     </script>
 
     <!-- Hero Section -->
@@ -153,48 +168,6 @@
       }
 
       loadArticles();
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Ambil daftar artikel dari localStorage atau gunakan array dummy jika kosong
-        let articles = JSON.parse(localStorage.getItem("articles")) || [];
-
-        // Ambil container untuk menampilkan artikel
-        const articleContainer = document.getElementById("article-list");
-
-        // Pastikan container ada di halaman
-        if (articleContainer) {
-          articleContainer.innerHTML = ""; // Kosongkan dulu sebelum diisi ulang
-
-          articles.forEach((article, index) => {
-            let articleHTML = `
-              <div class="col-md-4">
-                <div class="card">
-                  <img src="${article.image}" class="card-img-top" alt="News Image" />
-                  <div class="card-body">
-                    <h5 class="card-title">${article.title}</h5>
-                    <p class="card-text">${article.shortDescription}</p>
-                    <button class="btn btn-primary read-more" data-index="${index}">Read More</button>
-                  </div>
-                </div>
-              </div>
-            `;
-            articleContainer.innerHTML += articleHTML;
-          });
-
-          // Tambahkan event listener ke semua tombol "Read More"
-          document.querySelectorAll(".read-more").forEach((button) => {
-            button.addEventListener("click", function () {
-              const index = this.getAttribute("data-index");
-              localStorage.setItem(
-                "selectedArticle",
-                JSON.stringify(articles[index])
-              );
-              window.location.href = "detail.html";
-            });
-          });
-        }
-      });
     </script>
   </body>
 </html>

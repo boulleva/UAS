@@ -32,7 +32,7 @@
         <!-- Artikel Utama -->
         <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
           <article>
-            <img src="b8.png" alt="" class="img-fluid" />
+            <img src="b8.png" alt="Artikel Gambar" class="img-fluid" />
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
               tincidunt, risus vel vehicula gravida, enim eros ultrices nisl,
@@ -58,34 +58,5 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Ambil artikel yang dipilih dari localStorage
-        const selectedArticle = JSON.parse(
-          localStorage.getItem("selectedArticle")
-        );
-
-        // Pastikan data artikel ada
-        if (!selectedArticle) {
-          alert("Artikel tidak ditemukan!");
-          window.location.href = "mainpage.html";
-          return;
-        }
-
-        // Update konten halaman dengan data artikel
-        document.querySelector(".article-title h1").innerText =
-          selectedArticle.title;
-        document.querySelector(
-          ".article-title p"
-        ).innerHTML = `Ditulis oleh <strong>${selectedArticle.author}</strong> | ${selectedArticle.date}`;
-        document.querySelector(".article-content img").src =
-          selectedArticle.image;
-        document.querySelector(".article-content img").alt =
-          selectedArticle.title;
-        document.querySelector(
-          ".article-content article"
-        ).innerHTML += `<p>${selectedArticle.content}</p>`;
-      });
-    </script>
   </body>
 </html>

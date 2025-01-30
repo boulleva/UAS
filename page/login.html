@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="login.css" />
   </head>
   <body>
+    <!-- Cek jika user sudah login -->
+    <script>
+      if (localStorage.getItem("username")) {
+        window.location.href = "mainpage.html";
+      }
+    </script>
+
     <!-- Header -->
     <header class="py-3 px-4 bg-white shadow-sm">
       <div class="container">
@@ -55,6 +62,7 @@
             />
           </div>
           <button type="submit" class="btn btn-primary w-100">Login</button>
+          <div id="error-message" class="text-danger text-center mt-3"></div>
         </form>
         <div class="text-center mt-3">
           <small>
@@ -82,8 +90,16 @@
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value.trim();
+          const errorMessage = document.getElementById("error-message");
+
+          // Validasi input
+          if (!username || !password) {
+            errorMessage.textContent =
+              "Username dan password tidak boleh kosong!";
+            return;
+          }
 
           try {
             const response = await fetch("http://localhost:4000/login", {
@@ -94,32 +110,21 @@
 
             const result = await response.json();
 
-            if (result.success) {
-              localStorage.setItem("username", username);
-              localStorage.setItem("role", result.role); // Simpan role pengguna
-
+            if (response.ok && result.success) {
+              localStorage.setItem("token", result.token); // Simpan token JWT
+              localStorage.setItem("username", username); // Simpan username
               alert("Login berhasil!");
-              if (result.role === "admin") {
-                window.location.href = "upload.html";
-              } else {
-                window.location.href = "mainpage.html";
-              }
+              window.location.href = "mainpage.html";
             } else {
-              alert("Login gagal. Periksa username dan password Anda.");
+              errorMessage.textContent =
+                result.message ||
+                "Login gagal. Periksa username dan password Anda.";
             }
           } catch (error) {
             console.error("Error during login:", error);
-            alert("Terjadi kesalahan. Coba lagi nanti.");
+            errorMessage.textContent = "Terjadi kesalahan. Coba lagi nanti.";
           }
         });
-
-      // Cegah looping login
-      if (
-        localStorage.getItem("username") &&
-        window.location.pathname.includes("login.html")
-      ) {
-        window.location.href = "mainpage.html";
-      }
     </script>
   </body>
 </html>

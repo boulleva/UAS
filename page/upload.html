@@ -129,47 +129,5 @@
           reader.readAsDataURL(imageInput);
         });
     </script>
-    <script>
-      document
-        .getElementById("uploadForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          let title = document.getElementById("title").value;
-          let category = document.getElementById("category").value;
-          let content = document.getElementById("content").value;
-          let metadata = document.getElementById("metadata").value;
-          let image = document.getElementById("thumbnail").files[0];
-
-          if (!image) {
-            alert("Mohon pilih gambar!");
-            return;
-          }
-
-          let reader = new FileReader();
-          reader.readAsDataURL(image);
-          reader.onload = function () {
-            let imageUrl = reader.result;
-
-            let articles = JSON.parse(localStorage.getItem("articles")) || [];
-
-            let newArticle = {
-              title: title,
-              category: category,
-              content: content,
-              shortDescription: metadata,
-              image: imageUrl,
-              author: "Admin", // Bisa diganti sesuai user login
-              date: new Date().toLocaleDateString("id-ID"),
-            };
-
-            articles.push(newArticle);
-            localStorage.setItem("articles", JSON.stringify(articles));
-
-            alert("Artikel berhasil diunggah!");
-            window.location.href = "mainpage.html";
-          };
-        });
-    </script>
   </body>
 </html>

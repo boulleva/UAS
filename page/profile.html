@@ -11,9 +11,8 @@
     <link rel="stylesheet" href="profile.css" />
   </head>
   <body>
-    <a href="mainpage.html" class="btn btn-secondary back-button">Kembali</a>
     <header class="bg-primary text-white text-center py-3">
-      <h1>FalxyTV</h1>
+      <h1>User Profile</h1>
     </header>
 
     <div class="container mt-4">
@@ -21,6 +20,7 @@
       <p>
         Anda login sebagai: <strong><span id="roleDisplay"></span></strong>
       </p>
+
       <!-- Tombol upload berita hanya untuk Admin -->
       <div id="adminOptions" class="mt-3" style="display: none">
         <a href="upload.html" class="btn btn-success">Upload Berita</a>
@@ -34,21 +34,29 @@
       const token = localStorage.getItem("token");
 
       if (!token) {
-        // Redirect ke login jika tidak ada token
-        window.location.href = "login.html";
+        window.location.href = "login.html"; // Redirect jika tidak ada token
       } else {
-        // Decode token untuk mendapatkan username & role
-        const decoded = JSON.parse(atob(token.split(".")[1]));
-        const username = decoded.username;
-        const role = decoded.role;
+        try {
+          // Coba decode token
+          const payload = JSON.parse(atob(token.split(".")[1]));
 
-        // Tampilkan username dan role di halaman
-        document.getElementById("usernameDisplay").innerText = username;
-        document.getElementById("roleDisplay").innerText = role;
+          if (!payload.username || !payload.role) {
+            throw new Error("Token tidak valid");
+          }
 
-        // Jika pengguna adalah admin, tampilkan tombol "Upload Berita"
-        if (role === "admin") {
-          document.getElementById("adminOptions").style.display = "block";
+          // Tampilkan informasi user
+          document.getElementById("usernameDisplay").innerText =
+            payload.username;
+          document.getElementById("roleDisplay").innerText = payload.role;
+
+          // Jika role = admin, tampilkan opsi upload
+          if (payload.role === "admin") {
+            document.getElementById("adminOptions").style.display = "block";
+          }
+        } catch (error) {
+          console.error("Token error:", error);
+          localStorage.removeItem("token"); // Hapus token jika error
+          window.location.href = "login.html"; // Redirect ke login
         }
       }
 
@@ -56,8 +64,8 @@
       document
         .getElementById("logoutBtn")
         .addEventListener("click", function () {
-          localStorage.removeItem("token"); // Hapus token dari localStorage
-          window.location.href = "login.html"; // Redirect ke halaman login
+          localStorage.removeItem("token"); // Hapus token
+          window.location.href = "login.html"; // Redirect ke login
         });
     </script>
   </body>
