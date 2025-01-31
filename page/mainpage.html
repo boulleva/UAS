@@ -13,6 +13,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles2.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
   </head>
   <body>
     <!-- Navbar -->
@@ -54,7 +58,7 @@
         const username = localStorage.getItem("username");
 
         if (!username) {
-          window.location.href = "login.html"; // Redirect hanya jika belum login
+          alert("Anda belum login. Beberapa fitur mungkin terbatas.");
         }
 
         // Logout
@@ -169,5 +173,20 @@
 
       loadArticles();
     </script>
+    <!-- Social Media Links -->
+    <div class="social-media">
+      <a href="https://www.facebook.com/" target="_blank" class="social-icon">
+        <img src="facebook.png" alt="Facebook" />
+      </a>
+      <a href="https://www.instagram.com/" target="_blank" class="social-icon">
+        <img src="instagram.png" alt="Instagram" />
+      </a>
+      <a href="https://twitter.com/" target="_blank" class="social-icon">
+        <img src="twitter.png" alt="Twitter" />
+      </a>
+      <a href="https://wa.me/" target="_blank" class="social-icon">
+        <img src="whatsapp.png" alt="WhatsApp" />
+      </a>
+    </div>
   </body>
 </html>

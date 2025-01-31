@@ -1,63 +1,218 @@
 /* Import Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-/* General Styles */
-body {
-  font-family: "Poppins", sans-serif;
-  background-color: #f8f9fa;
-  margin: 0;
-  padding: 0;
+/* Root Variables */
+:root {
+  --primary-font: "Poppins", sans-serif;
+  --dark-bg: #343a40;
+  --light-bg: #f8f9fa;
+  --white: #fff;
+  --black: #222;
+  --primary-color: #007bff;
+  --hover-color: #0056b3;
+  --border-radius: 10px;
+  --spacing-sm: 0.625rem; /* 10px */
+  --spacing-md: 1.25rem; /* 20px */
+  --spacing-lg: 1.875rem; /* 30px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-small: 0.875rem; /* 14px */
+  --font-size-large: 1.5rem; /* 24px */
 }
 
-/* Header */
-.article-header {
-  background: #343a40;
-  color: #fff;
-  padding: 20px;
+/* Base Styles */
+body {
+  font-family: var(--primary-font);
+  background-color: var(--light-bg);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  font-size: var(--font-size-base);
+  color: var(--black);
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--white);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-sm) 0;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--black);
+}
+
+.navbar-nav .nav-item {
+  margin-left: var(--spacing-md);
+}
+
+.nav-link {
+  font-size: var(--font-size-small);
+  font-weight: 500;
+  color: var(--black);
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+/* Tombol Logout */
+.btn-logout {
+  background: red;
+  color: white;
+  font-size: var(--font-size-small);
+  font-weight: 500;
+  border: none;
+  padding: 8px 15px;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-logout:hover {
+  background: darkred;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+.hero h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.hero p {
+  font-size: var(--font-size-small);
+  color: #666;
+}
+
+/* News Section */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+h2 {
+  font-size: var(--font-size-large);
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
   text-align: center;
 }
 
-/* Article Content */
-.article-content img {
-  max-width: 100%;
-  border-radius: 10px;
-  margin: 20px 0;
+/* Card Style */
+.card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  height: 150px; /* Ukuran baru */
+  object-fit: cover;
+}
+
+.card-body {
+  padding: var(--spacing-md);
+  background-color: var(--white);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.card-text {
+  font-size: var(--font-size-small);
+  color: #555;
+}
+
+/* Button */
+.btn-primary {
+  background: var(--primary-color);
+  border: none;
+  font-size: var(--font-size-small);
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+  background: var(--hover-color);
 }
 
 /* Footer */
 .footer {
-  background: #343a40;
-  color: #fff;
+  background: var(--dark-bg);
+  color: var(--white);
   text-align: center;
-  padding: 10px 0;
-  margin-top: 30px;
+  padding: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  font-size: var(--font-size-small);
+}
+/* Social Media Icons */
+.social-media {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
 }
 
-/* Responsive Design */
+.social-icon img {
+  width: 25px !important; /* Ukuran baru untuk ikon media sosial */
+  height: 25px !important; /* Ukuran baru untuk ikon media sosial */
+  border-radius: 50% !important; /* Membuat ikon bulat */
+  transition: transform 0.3s ease-in-out;
+  object-fit: cover !important;
+}
+
+/* Efek hover */
+.social-icon img:hover {
+  transform: scale(1.2);
+}
+
+/* Responsiveness */
 @media (max-width: 768px) {
-  .article-header h1 {
-    font-size: 24px;
+  :root {
+    --spacing-md: 0.9375rem; /* 15px */
+    --spacing-lg: 1.5625 rem; /* 25px */
   }
 
-  .article-header p {
-    font-size: 14px;
+  .hero h1 {
+    font-size: var(--font-size-large);
   }
 
-  .article-content p {
-    font-size: 16px;
-  }
-
+  .hero p,
   .footer {
-    font-size: 14px;
+    font-size: var(--font-size-small);
+  }
+
+  .card img {
+    height: 180px; /* Ukuran baru untuk layar lebih kecil */
   }
 }
 
 @media (max-width: 480px) {
-  .article-header h1 {
-    font-size: 20px;
+  .hero h1 {
+    font-size: 1.25rem;
   }
 
-  .article-content p {
-    font-size: 14px;
+  .card img {
+    height: 120px; /* Ukuran baru untuk layar kecil */
+  }
+
+  .card-title {
+    font-size: 1rem;
   }
 }
