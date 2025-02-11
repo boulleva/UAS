@@ -1,0 +1,25 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f4f4;
+}
+
+.quiz-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.btn-option {
+  width: 100%;
+  margin: 5px 0;
+}

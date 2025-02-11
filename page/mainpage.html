@@ -22,36 +22,46 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
       <div class="container">
+        <!-- Logo FalxyTV -->
         <a class="navbar-brand" href="index.html">FalxyTV</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
+        
+        <!-- Search Bar -->
+        <form class="d-flex ms-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Cari berita..." aria-label="Search">
+          <button class="btn btn-outline-primary" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+        
+        <!-- Toggle Button for Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
+        
+        <!-- Navigation Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="about.html">About</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="profile.html">Profile</a>
             </li>
             <li class="nav-item">
-              <button id="logoutBtn" class="btn btn-danger btn-sm">
-                Logout
-              </button>
+              <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-
+    
+    <div class="hero">
+      <h1>FALXY</h1>
+      <p>Portal Berita Terpercaya di Dunia E-Sport dan Anime</p>
+    </div>
     <!-- Cek Login -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -71,17 +81,52 @@
           });
       });
     </script>
+    <!-- Headline News -->
+    <div class="container">
+      <!-- Main News -->
+      <div class="main-news">
+        <img src="b11.jpeg" alt="Megu Fujiura" />
+        <div class="news-content">
+          <span class="tag fyi">FYI</span>
+          <h1>
+            Permintaan Pasar Membengkak, Megu Fujiura Balik Ke ‘Industri Gelap’
+          </h1>
+          <p class="author">Oleh TAPION ● September 26, 2024</p>
+        </div>
+      </div>
 
-    <!-- Hero Section -->
-    <div class="hero">
-      <h1>Selamat Datang di FalxyTV</h1>
-      <p>Tempat terpercaya dalam dunia E-Sport dan Anime</p>
+      <!-- Side News -->
+      <div class="side-news">
+        <div class="news-item">
+          <img src="b12.jpg" alt="Genshin Impact" />
+          <div class="news-info">
+            <span class="tag game-play">GAME PLAY</span>
+            <p>Cara Main Genshin Impact Versi Windows di Laptop Touchscreen!</p>
+          </div>
+        </div>
+
+        <div class="news-item">
+          <img src="b13.jpg" alt="NTR Anime" />
+          <div class="news-info">
+            <span class="tag animanga">ANIMANGA</span>
+            <p>NTR Rame Lagi di Jepang, Ada Apa?</p>
+          </div>
+        </div>
+
+        <div class="news-item">
+          <img src="b14.jpeg" alt="Tiktok JAV" />
+          <div class="news-info">
+            <span class="tag fyi">FYI</span>
+            <p>
+              Serangkaian Seleb Tiktok Jepang Pindah Haluan Menjadi Artis JAV!
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Berita Terbaru -->
     <div class="container my-5">
-      <h2 class="mb-4">Berita Terkini</h2>
-      <div class="row" id="newsContainer">
         <!-- Berita Statis -->
         <div class="col-md-4">
           <div class="card">

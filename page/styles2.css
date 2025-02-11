@@ -1,7 +1,7 @@
 /* Import Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-/* Root Variables */
+/* ========== Root Variables ========== */
 :root {
   --primary-font: "Poppins", sans-serif;
   --dark-bg: #343a40;
@@ -19,7 +19,7 @@
   --font-size-large: 1.5rem; /* 24px */
 }
 
-/* Base Styles */
+/* ========== Base Styles ========== */
 body {
   font-family: var(--primary-font);
   background-color: var(--light-bg);
@@ -30,7 +30,7 @@ body {
   color: var(--black);
 }
 
-/* Navbar */
+/* ========== Navbar ========== */
 .navbar {
   background-color: var(--white);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -56,8 +56,31 @@ body {
 .nav-link:hover {
   color: var(--primary-color);
 }
+/* Search Bar Styling */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  padding: 5px 10px;
+  width: 250px;
+}
 
-/* Tombol Logout */
+.search-bar input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  flex: 1;
+  font-size: 14px;
+}
+
+.search-bar button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+/* ========== Tombol Logout ========== */
 .btn-logout {
   background: red;
   color: white;
@@ -73,7 +96,7 @@ body {
   background: darkred;
 }
 
-/* Hero Section */
+/* ========== Hero Section ========== */
 .hero {
   text-align: center;
   padding: var(--spacing-lg);
@@ -89,21 +112,98 @@ body {
   color: #666;
 }
 
-/* News Section */
+/* ========== News Section ========== */
 .container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: var(--spacing-lg);
+  padding: 20px;
+  display: flex;
+  gap: 15px;
 }
 
-h2 {
-  font-size: var(--font-size-large);
-  font-weight: 600;
-  margin-bottom: var(--spacing-md);
-  text-align: center;
+/* ======= MAIN NEWS ======= */
+.main-news {
+  position: relative;
+  flex: 1.5;
+  max-height: 550px; /* Mengurangi tinggi agar tidak terlalu besar */
+  overflow: hidden;
 }
 
-/* Card Style */
+.main-news img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Agar gambar tetap proporsional */
+  border-radius: 10px;
+}
+
+/* ======= SIDE NEWS ======= */
+.side-news {
+  flex: 1;
+  display: grid;
+  gap: 12px;
+}
+
+.news-item {
+  position: relative;
+  max-height: 200px; /* Kurangi tinggi gambar di Side News */
+  overflow: hidden;
+}
+
+.news-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Agar gambar tetap proporsional */
+  border-radius: 8px;
+}
+
+/* ======= OVERLAY DAN TEKS BERITA ======= */
+.news-content,
+.news-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.news-content h1 {
+  font-size: 18px; /* Ukuran judul lebih kecil */
+  margin: 5px 0;
+  color: #fff;
+}
+
+.news-info p {
+  font-size: 12px;
+  color: #fff;
+}
+
+/* ======= TAG COLORS ======= */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.fyi {
+  background-color: #007bff;
+  color: white;
+}
+
+.animanga {
+  background-color: #ff4081;
+  color: white;
+}
+
+.game-play {
+  background-color: #ff9800;
+  color: white;
+}
+
+/* ========== Card Style ========== */
 .card {
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -118,7 +218,7 @@ h2 {
 .card img {
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
-  height: 150px; /* Ukuran baru */
+  height: 150px;
   object-fit: cover;
 }
 
@@ -138,7 +238,7 @@ h2 {
   color: #555;
 }
 
-/* Button */
+/* ========== Button ========== */
 .btn-primary {
   background: var(--primary-color);
   border: none;
@@ -152,7 +252,7 @@ h2 {
   background: var(--hover-color);
 }
 
-/* Footer */
+/* ========== Footer ========== */
 .footer {
   background: var(--dark-bg);
   color: var(--white);
@@ -161,7 +261,8 @@ h2 {
   margin-top: var(--spacing-lg);
   font-size: var(--font-size-small);
 }
-/* Social Media Icons */
+
+/* ========== Social Media Icons ========== */
 .social-media {
   display: flex;
   justify-content: center;
@@ -170,23 +271,23 @@ h2 {
 }
 
 .social-icon img {
-  width: 25px !important; /* Ukuran baru untuk ikon media sosial */
-  height: 25px !important; /* Ukuran baru untuk ikon media sosial */
-  border-radius: 50% !important; /* Membuat ikon bulat */
+  width: 25px !important;
+  height: 25px !important;
+  border-radius: 50% !important;
   transition: transform 0.3s ease-in-out;
   object-fit: cover !important;
 }
 
-/* Efek hover */
+/* Hover Effect */
 .social-icon img:hover {
   transform: scale(1.2);
 }
 
-/* Responsiveness */
+/* ========== Responsiveness ========== */
 @media (max-width: 768px) {
   :root {
-    --spacing-md: 0.9375rem; /* 15px */
-    --spacing-lg: 1.5625 rem; /* 25px */
+    --spacing-md: 0.9375rem;
+    --spacing-lg: 1.5625rem;
   }
 
   .hero h1 {
@@ -199,7 +300,11 @@ h2 {
   }
 
   .card img {
-    height: 180px; /* Ukuran baru untuk layar lebih kecil */
+    height: 180px;
+  }
+
+  .container {
+    flex-direction: column;
   }
 }
 
@@ -209,7 +314,7 @@ h2 {
   }
 
   .card img {
-    height: 120px; /* Ukuran baru untuk layar kecil */
+    height: 120px;
   }
 
   .card-title {
