@@ -62,6 +62,39 @@
       <h1>FALXY</h1>
       <p>Portal Berita Terpercaya di Dunia E-Sport dan Anime</p>
     </div>
+   <!--Pencarian-->
+   <script>
+      document.getElementById("searchForm").addEventListener("submit", function(event) {
+          event.preventDefault(); // Mencegah reload halaman
+      
+          let query = document.getElementById("searchInput").value.trim();
+          if (query.length < 2) return;
+      
+          fetch(`http://localhost:4000/search?q=${query}`)
+              .then(response => response.json())
+              .then(data => {
+                  let resultDiv = document.getElementById("searchResults");
+                  resultDiv.innerHTML = "";
+      
+                  if (data.length === 0) {
+                      resultDiv.innerHTML = "<p>Tidak ada hasil ditemukan.</p>";
+                      return;
+                  }
+      
+                  data.forEach(item => {
+                      resultDiv.innerHTML += `
+                          <div class="card mt-2">
+                              <div class="card-body">
+                                  <h5 class="card-title">${item.title}</h5>
+                                  <span class="badge bg-primary">${item.category}</span>
+                              </div>
+                          </div>
+                      `;
+                  });
+              })
+              .catch(error => console.error("Error fetching search results:", error));
+      });
+      </script>
     <!-- Cek Login -->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -83,45 +116,52 @@
     </script>
     <!-- Headline News -->
     <div class="container">
-      <!-- Main News -->
+      <a href="detail4.html">
       <div class="main-news">
         <img src="b11.jpeg" alt="Megu Fujiura" />
         <div class="news-content">
-          <span class="tag fyi">FYI</span>
+          <span class="tag fyi">ANIMANGA</span>
           <h1>
-            Permintaan Pasar Membengkak, Megu Fujiura Balik Ke ‘Industri Gelap’
+            Oshi No Ko Season 3 Akan Rilis dalam Waktu Mendatang ini!
           </h1>
-          <p class="author">Oleh TAPION ● September 26, 2024</p>
+          <p class="author">Oleh Noufal ● Februari 5, 2025</p>
         </div>
+      </a>
       </div>
 
       <!-- Side News -->
       <div class="side-news">
+        <a href="detail5.html">
         <div class="news-item">
           <img src="b12.jpg" alt="Genshin Impact" />
           <div class="news-info">
             <span class="tag game-play">GAME PLAY</span>
-            <p>Cara Main Genshin Impact Versi Windows di Laptop Touchscreen!</p>
+            <p>Azure Lane akan mendapatkan adaptasi animenya dalam waktu dekat?</p>
           </div>
+        </a>
         </div>
 
         <div class="news-item">
+          <a href="detail6.html">
           <img src="b13.jpg" alt="NTR Anime" />
           <div class="news-info">
             <span class="tag animanga">ANIMANGA</span>
-            <p>NTR Rame Lagi di Jepang, Ada Apa?</p>
+            <p>Anime zombie akan mendapatkan season terbarunya?</p>
           </div>
+          </a>
         </div>
 
         <div class="news-item">
+          <a href="detail7.html">
           <img src="b14.jpeg" alt="Tiktok JAV" />
           <div class="news-info">
             <span class="tag fyi">FYI</span>
             <p>
-              Serangkaian Seleb Tiktok Jepang Pindah Haluan Menjadi Artis JAV!
+              Cha Hae-In Jadi 'The Next' Waifu Collection 2025 !
             </p>
           </div>
         </div>
+      </a>
       </div>
     </div>
 
@@ -151,7 +191,7 @@
               <p class="card-text">
                 Game anime dating sim ini akan rilis 21 Januari 2025 mendatang!
               </p>
-              <a href="#" class="btn btn-primary">Read More</a>
+              <a href="detail2.html" class="btn btn-primary">Read More</a>
             </div>
           </div>
         </div>
@@ -166,7 +206,7 @@
                 Siapkan uang kalian karena bro makoto akan memasak anime
                 terbarunya!
               </p>
-              <a href="#" class="btn btn-primary">Read More</a>
+              <a href="detail3.html" class="btn btn-primary">Read More</a>
             </div>
           </div>
         </div>

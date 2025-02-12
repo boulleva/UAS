@@ -1,6 +1,7 @@
 import fs from "fs/promises"; // Modul untuk file system
 import path from "path"; // Modul untuk manipulasi path
 import jwt from "jsonwebtoken"; // Modul untuk JWT
+import { serve } from "bun"; // Modul server dari Bun.js
 
 const dbPath = path.join("db", "users.json"); // Lokasi file database JSON
 const JWT_SECRET = "your_secret_key"; // Ganti dengan secret key yang aman
@@ -17,7 +18,30 @@ async function readDatabase() {
     return [];
   }
 }
-
+// Data berita (sementara, bisa diambil dari database)
+const newsList = [
+  {
+    title: "Oshi No Ko Season 3 Akan Rilis dalam Waktu Mendatang ini!",
+    category: "ANIMANGA",
+  },
+  {
+    title: "Cara Main Genshin Impact Versi Windows di Laptop Touchscreen!",
+    category: "GAME PLAY",
+  },
+  { title: "NTR Rame Lagi di Jepang, Ada Apa?", category: "ANIMANGA" },
+  {
+    title: "Cha Hae-In Jadi 'The Next' Waifu Collection 2025 !",
+    category: "FYI",
+  },
+  {
+    title: "Berikut beberapa foto karakter anime di Squid Game 2",
+    category: "ANIMANGA",
+  },
+  {
+    title: "Makoto Shinkai akan rilis anime terbarunya?",
+    category: "ANIMANGA",
+  },
+];
 /**
  * Fungsi untuk menulis ke database
  */
